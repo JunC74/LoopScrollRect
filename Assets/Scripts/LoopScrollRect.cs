@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using System;
@@ -10,16 +10,17 @@ namespace UnityEngine.UI
     [RequireComponent(typeof(RectTransform))]
     public abstract class LoopScrollRect : UIBehaviour, IInitializePotentialDragHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IScrollHandler, ICanvasElement, ILayoutElement, ILayoutGroup
     {
-		//==========LoopScrollRect==========
-		[Tooltip("Prefab Source")]
-		public LoopScrollPrefabSource prefabSource;
+        //==========LoopScrollRect==========
+        [Tooltip("Prefab Source")]
+        public Component prefabSourceComponent;
+		public IPrefabSource prefabSource;
 
         [Tooltip("Total count, negative means INFINITE mode")]
         public int totalCount;
 
 		[HideInInspector]
 		[NonSerialized]
-		public LoopScrollDataSource dataSource = LoopScrollSendIndexSource.Instance;
+		public ILoopScrollDataSource dataSource = LoopScrollSendIndexSource.Instance;
 		public object[] objectsToFill
 		{
 			// wrapper for forward compatbility
@@ -278,7 +279,7 @@ namespace UnityEngine.UI
         private void ReturnObjectAndSendMessage(Transform go)
         {
             go.SendMessage("ScrollCellReturn", SendMessageOptions.DontRequireReceiver);
-            ResourceManager.Instance.ReturnObjectToPool(go.gameObject);
+            prefabSource.ReturnObject(go.gameObject);
         }
 
         public void ClearCells()
@@ -323,9 +324,7 @@ namespace UnityEngine.UI
 			//TODO: unsupported for Infinity or Grid yet
 			if (!Application.isPlaying || totalCount < 0 || contentConstraintCount > 1 || prefabSource == null)
 				return;
-
-			prefabSource.InitPool();
-
+            
 			StopMovement();
 			itemTypeEnd = reverseDirection ? offset : totalCount - offset;
 			itemTypeStart = itemTypeEnd;
@@ -363,9 +362,7 @@ namespace UnityEngine.UI
         {
 			if (!Application.isPlaying || prefabSource == null)
 				return;
-
-			prefabSource.InitPool();
-
+            
             StopMovement();
 			itemTypeStart = reverseDirection ? totalCount - offset : offset;
             itemTypeEnd = itemTypeStart;
@@ -566,6 +563,14 @@ namespace UnityEngine.UI
             m_VSliderExpand = allAreChildren && m_VerticalScrollbarRect && verticalScrollbarVisibility == ScrollbarVisibility.AutoHideAndExpandViewport;
             m_HSliderHeight = (m_HorizontalScrollbarRect == null ? 0 : m_HorizontalScrollbarRect.rect.height);
             m_VSliderWidth = (m_VerticalScrollbarRect == null ? 0 : m_VerticalScrollbarRect.rect.width);
+        }
+
+        protected override void Awake()
+        {
+            if (prefabSourceComponent != null && prefabSourceComponent is IPrefabSource)
+                prefabSource = prefabSourceComponent as IPrefabSource;
+            base.Awake();
+
         }
 
         protected override void OnEnable()
