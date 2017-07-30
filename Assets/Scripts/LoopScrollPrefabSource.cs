@@ -1,10 +1,10 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 namespace UnityEngine.UI
 {
-	[System.Serializable]
-	public class LoopScrollPrefabSource : MonoBehaviour, IPrefabSource
+	public class LoopScrollPrefabSource : PrefabSourceBehaviour
     {
         [SerializeField]
 		public string prefabName;
@@ -22,14 +22,23 @@ namespace UnityEngine.UI
 			ResourceManager.Instance.InitPool(prefabName, poolSize);
 		}
 			
-		public virtual GameObject GetObject()
+		public override GameObject GetObject()
 		{
 			return ResourceManager.Instance.GetObjectFromPool(prefabName);
 		}
 
-        public virtual void ReturnObject(GameObject obj)
+        public override void ReturnObject(GameObject obj)
         {
             ResourceManager.Instance.ReturnObjectToPool(obj);
         }
 	}
+
+
+    public abstract class PrefabSourceBehaviour : MonoBehaviour, IPrefabSource
+    {
+        public abstract GameObject GetObject();
+
+        public abstract void ReturnObject(GameObject obj);
+    }
+
 }

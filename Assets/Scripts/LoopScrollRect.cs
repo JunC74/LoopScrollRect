@@ -12,7 +12,7 @@ namespace UnityEngine.UI
     {
         //==========LoopScrollRect==========
         [Tooltip("Prefab Source")]
-        public Component prefabSourceComponent;
+        public PrefabSourceBehaviour prefabSourceComponent;
 		public IPrefabSource prefabSource;
 
         [Tooltip("Total count, negative means INFINITE mode")]
@@ -567,7 +567,7 @@ namespace UnityEngine.UI
 
         protected override void Awake()
         {
-            if (prefabSourceComponent != null && prefabSourceComponent is IPrefabSource)
+            if (prefabSourceComponent != null)
                 prefabSource = prefabSourceComponent as IPrefabSource;
             base.Awake();
 
