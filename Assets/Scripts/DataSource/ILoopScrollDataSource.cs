@@ -11,7 +11,7 @@ namespace UnityEngine.UI
         event Action DataUpdate;
     }
 
-    public abstract class DataSourceBehaviour : MonoBehaviour, ILoopScrollDataSource
+    public abstract class LoopDataSourceBehaviour : MonoBehaviour, ILoopScrollDataSource
     {
         public event Action DataUpdate;
 

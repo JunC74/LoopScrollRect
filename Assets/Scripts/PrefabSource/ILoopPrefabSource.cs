@@ -8,7 +8,7 @@
 
 namespace UnityEngine.UI
 {
-    public interface IPrefabSource
+    public interface ILoopPrefabSource
     {
         /// <summary>
         /// 获取格子对象
@@ -23,7 +23,7 @@ namespace UnityEngine.UI
         void ReturnObject(GameObject obj);
     }
 
-    public abstract class PrefabSourceBehaviour : MonoBehaviour, IPrefabSource
+    public abstract class LoopPrefabSourceBehaviour : MonoBehaviour, ILoopPrefabSource
     {
         public abstract GameObject GetObject();
 

@@ -4,7 +4,7 @@ using System;
 
 namespace UnityEngine.UI
 {
-	public class LoopScrollPrefabSource : PrefabSourceBehaviour
+	public class LoopScrollPrefabSource : LoopPrefabSourceBehaviour
     {
         [SerializeField]
 		public string prefabName;

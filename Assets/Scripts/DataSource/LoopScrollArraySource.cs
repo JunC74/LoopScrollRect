@@ -4,7 +4,7 @@ using System;
 
 namespace UnityEngine.UI
 {
-	public class LoopScrollArraySource : DataSourceBehaviour
+	public class LoopScrollArraySource : LoopDataSourceBehaviour
     {
         object[] objectsToFill;
 

@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace UnityEngine.UI
 {
-    public class LoopIndexDataSource : DataSourceBehaviour
+    public class LoopIndexDataSource : LoopDataSourceBehaviour
     {
         [SerializeField]
         private int ItemNum;

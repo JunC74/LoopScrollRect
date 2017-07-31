@@ -12,8 +12,8 @@ namespace UnityEngine.UI
     {
         //==========LoopScrollRect==========
         [Tooltip("Prefab Source")]
-        public PrefabSourceBehaviour prefabSourceComponent;
-		public IPrefabSource prefabSource;
+        public LoopPrefabSourceBehaviour prefabSourceComponent;
+		public ILoopPrefabSource prefabSource;
         
         public int totalCount {
             get {
@@ -25,7 +25,7 @@ namespace UnityEngine.UI
         }
 
         [Tooltip("Data Source")]
-        public DataSourceBehaviour dataSourceComponent;
+        public LoopDataSourceBehaviour dataSourceComponent;
         public ILoopScrollDataSource dataSource;
 
         [Tooltip("Threshold for preloading")]
@@ -561,7 +561,7 @@ namespace UnityEngine.UI
         protected override void Awake()
         {
             if (prefabSourceComponent != null)
-                prefabSource = prefabSourceComponent as IPrefabSource;
+                prefabSource = prefabSourceComponent as ILoopPrefabSource;
             if (dataSourceComponent != null)
                 dataSource = dataSourceComponent as ILoopScrollDataSource;
             base.Awake();
