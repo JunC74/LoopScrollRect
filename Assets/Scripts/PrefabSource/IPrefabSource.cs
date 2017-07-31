@@ -22,4 +22,11 @@ namespace UnityEngine.UI
         /// <param name="obj"></param>
         void ReturnObject(GameObject obj);
     }
+
+    public abstract class PrefabSourceBehaviour : MonoBehaviour, IPrefabSource
+    {
+        public abstract GameObject GetObject();
+
+        public abstract void ReturnObject(GameObject obj);
+    }
 }

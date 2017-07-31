@@ -14,24 +14,19 @@ namespace UnityEngine.UI
         [Tooltip("Prefab Source")]
         public PrefabSourceBehaviour prefabSourceComponent;
 		public IPrefabSource prefabSource;
+        
+        public int totalCount {
+            get {
+                if (dataSourceComponent != null)
+                    return dataSource.GetItemNum();
+                else
+                    return 0;
+            }
+        }
 
-        [Tooltip("Total count, negative means INFINITE mode")]
-        public int totalCount;
-
-		[HideInInspector]
-		[NonSerialized]
-		public ILoopScrollDataSource dataSource = LoopScrollSendIndexSource.Instance;
-		public object[] objectsToFill
-		{
-			// wrapper for forward compatbility
-			set
-			{
-				if(value != null)
-					dataSource = new LoopScrollArraySource<object>(value);
-				else
-					dataSource = LoopScrollSendIndexSource.Instance;
-			}
-		}
+        [Tooltip("Data Source")]
+        public DataSourceBehaviour dataSourceComponent;
+        public ILoopScrollDataSource dataSource;
 
         [Tooltip("Threshold for preloading")]
         public float threshold = 100;
@@ -288,8 +283,6 @@ namespace UnityEngine.UI
             {
                 itemTypeStart = 0;
                 itemTypeEnd = 0;
-                totalCount = 0;
-                objectsToFill = null;
                 for (int i = content.childCount - 1; i >= 0; i--)
                 {
                     ReturnObjectAndSendMessage(content.GetChild(i));
@@ -569,6 +562,8 @@ namespace UnityEngine.UI
         {
             if (prefabSourceComponent != null)
                 prefabSource = prefabSourceComponent as IPrefabSource;
+            if (dataSourceComponent != null)
+                dataSource = dataSourceComponent as ILoopScrollDataSource;
             base.Awake();
 
         }
